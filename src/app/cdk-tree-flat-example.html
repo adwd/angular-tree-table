@@ -1,0 +1,46 @@
+<table>
+  <tbody>
+    <cdk-tree [dataSource]="dataSource" [treeControl]="treeControl" class="display-contents">
+      <!-- This is the tree node template for leaf nodes -->
+      <cdk-tree-node *cdkTreeNodeDef="let node"
+                    [style.display]="shouldRender(node) ? 'contents' : 'none'"
+                    class="display-contents">
+        <!-- use a disabled button to provide padding for tree leaf -->
+        <tr>
+          <td [style.padding-left.px]="node.level * 20">
+            <button mat-icon-button disabled></button>
+            {{node.name}}
+          </td>
+          <td>
+            example text
+          </td>
+        </tr>
+      </cdk-tree-node>
+      <!-- This is the tree node template for expandable nodes -->
+      <cdk-tree-node *cdkTreeNodeDef="let node; when: hasChild"
+                    [style.display]="shouldRender(node) ? 'contents' : 'none'"
+                    class="display-contents">
+        <tr>
+          <td [style.padding-left.px]="node.level * 20">
+            <button mat-icon-button cdkTreeNodeToggle
+                    (click)="node.isExpanded = !node.isExpanded"
+                    [style.visibility]="node.expandable ? 'visible' : 'hidden'">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+              </mat-icon>
+            </button>
+            {{node.name}}
+          </td>
+          <td>
+            example text
+          </td>
+        </tr>
+      </cdk-tree-node>
+    </cdk-tree>
+  </tbody>
+</table>
+
+
+<!-- Copyright 2019 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
